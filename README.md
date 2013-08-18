@@ -1,3 +1,7 @@
+Modified Pal Szasz's ChkBugReport Tool to provide parse batteryinfo into slqite databases without the need for having a full bugreport.  --sqlite option silences the output of all other html and graphs other than sqlite.db and log.txt
+--bi option allows for processing of the batteryinfo file without the need for skipping the sanity check by including a header file with ==== dumpstate: ====
+
+-------------------------------------------------------------
 The purpose of the ChkBugReport tool is to process the bugreport files generated on the phone, and
 extract as much useful data as possible.
 
