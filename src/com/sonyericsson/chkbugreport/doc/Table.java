@@ -201,6 +201,8 @@ public class Table extends DocNode {
 
     public void setCSVOutput(Module br, String csv) {
         if (csv == null) return;
+        if(br.getContext().isSqlite()) return;
+        
         String fn = br.getRelRawDir() + csv + ".csv";
         try {
             mCsvF = new FileOutputStream(br.getBaseDir() + fn);

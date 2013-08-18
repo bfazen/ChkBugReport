@@ -144,7 +144,9 @@ public class FTracePlugin extends Plugin {
         for (FTraceProcessRecord pr : list) {
             // Create the trace image
             String png = "ftrace_" + pr.pid + ".png";
-            createTracePng(br.getBaseDir() + png, pr, data.getFirstTraceRecord(), duration);
+            if(!br.getContext().isSqlite()){
+            	createTracePng(br.getBaseDir() + png, pr, data.getFirstTraceRecord(), duration);
+            }
             // Add the table row
             addTraceTblRow(br, t, pr, true);
         }
@@ -315,7 +317,7 @@ public class FTracePlugin extends Plugin {
     }
 
     private void createTracePng(String fileName, FTraceProcessRecord pr, TraceRecord head, long duration) {
-        // Setup initial data
+    	// Setup initial data
         int w = TRACE_W;
         int h = TRACE_H;
         long startTime = head.time;
@@ -469,6 +471,9 @@ public class FTracePlugin extends Plugin {
         }
         t.end();
 
+        if(br.getContext().isSqlite()){
+        	return;
+        }
         // Add some guidelines
         g.setColor(new Color(0x80ffffff, true));
         for (int i = 0; i < max; i++) {

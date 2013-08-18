@@ -226,6 +226,10 @@ public class Chapter extends DocNode implements ChapterParent {
 
     @Override
     public void render(Renderer r) throws IOException {
+//    	TODO Check this... not quite sure how the codebase works... 
+//    	this is either going to break downstream processes
+//    	or it may be the simplest solution and wrapping the other chapter outputs may be completely redundant if we stop processing at this stage
+    	if(mMod.getContext().isSqlite()) return;
         mMod.printOut(2, "Writing chapter: " + getFullName() + "...");
         mRenderer.begin();
 

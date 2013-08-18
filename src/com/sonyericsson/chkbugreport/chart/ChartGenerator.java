@@ -78,6 +78,8 @@ public class ChartGenerator {
     }
 
     public DocNode generate(Module mod) {
+    	if(mod.getContext().isSqlite()) return null;
+    	
         // Initialize all plugins
         long firstTs = Long.MAX_VALUE;
         long lastTs = Long.MIN_VALUE;

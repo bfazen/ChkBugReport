@@ -540,8 +540,10 @@ public abstract class Module implements ChapterParent {
         mDoc.setFileName(mFileName.get());
 
         mContext.setLogOutput(getBaseDir() + "/" + LOG_NAME);
-        mDoc.begin();
-
+//        if(!mContext.isSqlite()){
+        	mDoc.begin();
+//        }
+        
         // Allow sub-classes to pre-process data
         preProcess();
 
@@ -552,6 +554,7 @@ public abstract class Module implements ChapterParent {
         printOut(1, "Collecting errors...");
         collectBugs();
 
+        if(!mContext.isSqlite()){
         // Copy over some builtin resources
         printOut(1, "Copying extra resources...");
         copyRes(COMMON_RES);
@@ -559,7 +562,8 @@ public abstract class Module implements ChapterParent {
         // Save each section as raw file
         printOut(1, "Saving raw sections");
         saveSections();
-
+        }
+        
         // Allow sub-classes to post-process data and do cleanup
         postProcess();
 
@@ -843,7 +847,8 @@ public abstract class Module implements ChapterParent {
     }
 
     protected void addSection(String name, String fileName, InputStream is, boolean limitSize) {
-        int limit = Integer.MAX_VALUE;
+    	printOut(2, "ADDING A SECTION With NAME=" + name + " FILENAME=" + fileName);
+    	int limit = Integer.MAX_VALUE;
         if (limitSize) {
             limit = mContext.getLimit();
         }
@@ -864,7 +869,8 @@ public abstract class Module implements ChapterParent {
 
     public boolean addFile(String fileName, String type, boolean limitSize) {
         // Check if any of the plugins would like to handle this
-        for (Plugin p : mPlugins) {
+    	printOut(2, "ADDING A NEW FILE with FILENAME=" + fileName + " and TYPE=" + type);
+    	for (Plugin p : mPlugins) {
             if (p.handleFile(this, fileName, type)) {
                 return true;
             }

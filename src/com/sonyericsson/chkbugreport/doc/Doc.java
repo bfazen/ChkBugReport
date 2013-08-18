@@ -159,9 +159,11 @@ public class Doc extends Chapter {
             ext.render(r);
         }
 
-        // In the still opened index html we just create the frameset
-        getModule().printOut(1, "Writing frameset...");
-        writeFrames(toc);
+        if(!getModule().getContext().isSqlite()){
+        	// In the still opened index html we just create the frameset
+        	getModule().printOut(1, "Writing frameset...");
+        	writeFrames(toc);
+        }
     }
 
     private void writeFrames(Chapter toc) throws FileNotFoundException {

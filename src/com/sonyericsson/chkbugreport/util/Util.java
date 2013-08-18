@@ -94,7 +94,10 @@ public final class Util {
     }
 
     public static boolean createTimeBar(Module br, String fn, int w, long ts0, long ts1) {
-        int h = 75;
+        if(br.getContext().isSqlite()){
+        	return false;
+        }
+    	int h = 75;
         BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = (Graphics2D)img.getGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -118,7 +121,7 @@ public final class Util {
     }
 
     public static boolean renderTimeBar(BufferedImage img, Graphics2D g, int ox, int oy, int w, int h, long ts0, long ts1, boolean vFlip) {
-        boolean useMS = false;
+    	boolean useMS = false;
         int count = 10; // let's assume we will show 10 marks
         int slice = 0;
 

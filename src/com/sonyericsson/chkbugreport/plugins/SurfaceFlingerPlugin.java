@@ -405,7 +405,9 @@ public class SurfaceFlingerPlugin extends Plugin {
 
         // Save the image
         String fn = "sf_layer_all_" + opacity + ".png";
-        endPng(br.getBaseDir() + fn);
+        if(!br.getContext().isSqlite()){
+        	endPng(br.getBaseDir() + fn);
+        }
         return fn;
     }
 
@@ -434,7 +436,8 @@ public class SurfaceFlingerPlugin extends Plugin {
     }
 
     private String createPng(Module br, int color, Layer l, Region reg) {
-        beginPng();
+
+    	beginPng();
 
         // Now render the layer area with a light color
         renderRect(l.rect, 0x40000000 | color);
@@ -447,7 +450,9 @@ public class SurfaceFlingerPlugin extends Plugin {
 
         // Save the image
         String fn = "sf_layer_" + Integer.toHexString(l.hashCode()) + "_" + Integer.toHexString(reg.hashCode()) + ".png";
-        endPng(br.getBaseDir() + fn);
+        if(!br.getContext().isSqlite()){
+        	endPng(br.getBaseDir() + fn);
+        }
         return fn;
     }
 

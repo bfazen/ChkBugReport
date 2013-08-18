@@ -219,7 +219,9 @@ public class TreePNGPlugin extends Plugin {
     private void savePng(Chart chart, TraceModule rep) {
         // Save the image
         try {
-            ImageIO.write(chart.img, "png", new File(rep.getBaseDir() + chart.fn));
+            if(!rep.getContext().isSqlite()){
+            	ImageIO.write(chart.img, "png", new File(rep.getBaseDir() + chart.fn));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

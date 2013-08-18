@@ -45,12 +45,16 @@ public class HTTPRenderer implements Renderer {
 
     @Override
     public void begin() throws FileNotFoundException {
-        HtmlUtil.writeHTMLHeader(mOut.getPrintStream(), "", "/data/");
-    }
+//    	if(!mMod.getContext().isSqlite()){
+    		HtmlUtil.writeHTMLHeader(mOut.getPrintStream(), "", "/data/");
+//    	}
+	}
 
     @Override
     public void end() {
-        HtmlUtil.writeHTMLFooter(mOut.getPrintStream());
+//    	if(!mMod.getContext().isSqlite()){
+    		HtmlUtil.writeHTMLFooter(mOut.getPrintStream());
+//    	}
     }
 
     @Override

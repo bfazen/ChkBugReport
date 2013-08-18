@@ -51,6 +51,9 @@ public class ScreenShotPlugin extends Plugin {
 
     @Override
     public void generate(Module br) {
+        if(br.getContext().isSqlite()){
+        	return;
+        }
         BufferedImage img = (BufferedImage)br.getInfo("screenshot");
         if (img == null) return;
 

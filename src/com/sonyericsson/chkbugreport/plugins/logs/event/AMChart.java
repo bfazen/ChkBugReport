@@ -140,6 +140,10 @@ import javax.imageio.ImageIO;
             drawState(W);
         }
 
+        if(br.getContext().isSqlite()){
+        	return null;
+        }
+        
         if (mUsed == 0) {
             // Noting was rendered, so don't save the empty image
             return null;

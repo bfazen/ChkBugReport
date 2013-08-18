@@ -45,6 +45,8 @@ public class Context {
     private int mLimit = Integer.MAX_VALUE;
     // Silent mode
     private boolean mSilent = false;
+    // Sqlite mode
+    private boolean mSqlite = false;
 
     /**
      * Returns the url to ChkBugReport's homepage
@@ -127,7 +129,23 @@ public class Context {
     public void setSilent(boolean silent) {
         mSilent = silent;
     }
+    
+    /**
+     * Set sqlite only mode
+     * @param sqlite True if sqlite mode should be used
+     */
+	public void setSqlite(boolean b) {
+		mSqlite = b;
+	}
 
+    /**
+     * Returns true if the application should be sqlite output only
+     * @return true if the application should be sqlite output only
+     */
+    public boolean isSqlite() {
+        return mSqlite;
+    }
+    
     /* package */ void parseTimeWindow(String timeWindow) {
         try {
             Matcher m = Pattern.compile("(.*)\\.\\.(.*)").matcher(timeWindow);
@@ -197,5 +215,6 @@ public class Context {
     /* package */ void setOutputListener(OutputListener listener) {
         mOutListener = listener;
     }
+
 
 }

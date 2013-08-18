@@ -88,54 +88,56 @@ import java.util.Map.Entry;
 
         // Write the VCD file
         String fn = br.getRelRawDir() + "am_logs.vcd";
-        try {
-            FileOutputStream fos = new FileOutputStream(br.getBaseDir() + fn);
-            PrintStream fo = new PrintStream(fos);
-
-            // write header
-            fo.println("$timescale 1ms $end");
-            fo.println("$scope am_logs $end");
-            for (Entry<String, Integer> item : vcdIds.entrySet()) {
-                fo.println("$var wire 1 a" + item.getValue() + " " + item.getKey() + " $end");
-            }
-            fo.println("$upscope $end");
-            fo.println("$enddefinitions $end");
-
-            // Write initial values
-            fo.println("#" + firstTs);
-            for (Entry<String, Integer> item : vcdIds.entrySet()) {
-                int id = item.getValue();
-                String component = item.getKey();
-                AMChart chart = charts.get(component);
-                int initState = AMChart.STATE_UNKNOWN;
-                if (chart != null) {
-                    initState = chart.getInitState();
-                }
-                char state = getVCDState(initState);
-                fo.println("b" + state + " a" + id);
-            }
-
-            // Write events
-            for (int i = 0; i < cnt; i++) {
-                AMData am = mAmTrace.get(i);
-                int pid = am.getPid();
-                String component = am.getComponent();
-                if (pid < 0 || component == null) continue;
-                int id = vcdIds.get(component);
-                int state = AMChart.actionToState(am.getAction());
-                if (state != AMChart.STATE_UNKNOWN) {
-                    fo.println("#" + am.getTS());
-                    fo.println("b" + getVCDState(state) + " a" + id);
-                }
-            }
-
-            new Para(ch)
-                .add("AM logs converted to VCD file (you can use GTKWave to open it): ")
-                .add(new Link(fn, fn));
-        } catch (IOException e) {
-            br.printErr(3, "Error saving vcd file: " + e);
+        if(!br.getContext().isSqlite()){
+	        try {
+	            FileOutputStream fos = new FileOutputStream(br.getBaseDir() + fn);
+	            PrintStream fo = new PrintStream(fos);
+	
+	            // write header
+	            fo.println("$timescale 1ms $end");
+	            fo.println("$scope am_logs $end");
+	            for (Entry<String, Integer> item : vcdIds.entrySet()) {
+	                fo.println("$var wire 1 a" + item.getValue() + " " + item.getKey() + " $end");
+	            }
+	            fo.println("$upscope $end");
+	            fo.println("$enddefinitions $end");
+	
+	            // Write initial values
+	            fo.println("#" + firstTs);
+	            for (Entry<String, Integer> item : vcdIds.entrySet()) {
+	                int id = item.getValue();
+	                String component = item.getKey();
+	                AMChart chart = charts.get(component);
+	                int initState = AMChart.STATE_UNKNOWN;
+	                if (chart != null) {
+	                    initState = chart.getInitState();
+	                }
+	                char state = getVCDState(initState);
+	                fo.println("b" + state + " a" + id);
+	            }
+	
+	            // Write events
+	            for (int i = 0; i < cnt; i++) {
+	                AMData am = mAmTrace.get(i);
+	                int pid = am.getPid();
+	                String component = am.getComponent();
+	                if (pid < 0 || component == null) continue;
+	                int id = vcdIds.get(component);
+	                int state = AMChart.actionToState(am.getAction());
+	                if (state != AMChart.STATE_UNKNOWN) {
+	                    fo.println("#" + am.getTS());
+	                    fo.println("b" + getVCDState(state) + " a" + id);
+	                }
+	            }
+	
+	            new Para(ch)
+	                .add("AM logs converted to VCD file (you can use GTKWave to open it): ")
+	                .add(new Link(fn, fn));
+	        } catch (IOException e) {
+	            br.printErr(3, "Error saving vcd file: " + e);
+	        }
         }
-
+        
         // We need to finish the charts (fill in the end, save the image, etc)
         Table t = new Table(Table.FLAG_DND, ch);
         t.addColumn("Component", Table.FLAG_NONE);

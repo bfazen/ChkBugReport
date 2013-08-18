@@ -69,40 +69,52 @@ public class FileRenderer implements Renderer {
 
     @Override
     public void begin() throws FileNotFoundException {
-        if (mFileName == null) {
-            mOut = mParent.mOut;
-        } else {
-            mOut = new PrintStream(mDoc.getBaseDir() + mFileName);
-            HtmlUtil.writeHTMLHeader(mOut, mFileName, "");
-        }
+    	if(!mDoc.getModule().getContext().isSqlite()){
+	    	if (mFileName == null) {
+	            mOut = mParent.mOut;
+	        } else {
+	            mOut = new PrintStream(mDoc.getBaseDir() + mFileName);
+	            HtmlUtil.writeHTMLHeader(mOut, mFileName, "");
+	        }
+    	}
     }
 
     @Override
     public void end() {
-        if (mFileName != null) {
-            HtmlUtil.writeHTMLFooter(mOut);
-            mOut.close();
-        }
+    	if(!mDoc.getModule().getContext().isSqlite()){
+	        if (mFileName != null) {
+	            HtmlUtil.writeHTMLFooter(mOut);
+	            mOut.close();
+	        }
+    	}
     }
 
     @Override
     public void print(String string) {
-        mOut.print(string);
+    	if(!mDoc.getModule().getContext().isSqlite()){
+    		mOut.print(string);
+    	}
     }
 
     @Override
     public void println(String string) {
-        mOut.println(string);
+    	if(!mDoc.getModule().getContext().isSqlite()){
+    		mOut.println(string);
+    	}
     }
 
     @Override
     public void print(long v) {
-        mOut.print(v);
+    	if(!mDoc.getModule().getContext().isSqlite()){
+    		mOut.print(v);
+    	}
     }
 
     @Override
     public void print(char c) {
-        mOut.print(c);
+    	if(!mDoc.getModule().getContext().isSqlite()){
+    		mOut.print(c);
+    	}
     }
 
     @Override

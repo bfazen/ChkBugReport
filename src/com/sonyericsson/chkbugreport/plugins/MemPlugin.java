@@ -273,64 +273,64 @@ public class MemPlugin extends Plugin {
         }
         t.end();
 
-
-        // Create some nice chart about it as well
-        BufferedImage img = new BufferedImage(IW, IH, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = (Graphics2D)img.getGraphics();
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, IW, IH);
-
-        // Draw the total memory area
-        int b = 3;
-        g.setColor(Color.BLACK);
-        g.fillRect(GML - b, GMT - b, GW + 2*b, GH + 2*b);
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(GML, GMT, GW, GH);
-
-        // Draw the free memory
-        int yy = 0;
-        int hh = mFreeMem * GH / mTotMem;
-        drawBox(g, 0x00ff00, yy, hh);
-        drawLabel(g, 0, hh, "Free");
-
-        // Draw the buffers
-        yy += hh;
-        hh = mBuffers * GH / mTotMem;
-        drawBox(g, 0x40ffff, yy, hh);
-        int startPossFree = yy;
-
-        // Draw the cache
-        yy += hh;
-        hh = mCaches * GH / mTotMem;
-        drawBox(g, 0x8080ff, yy, hh);
-
-        // Draw the slab-r
-        yy += hh;
-        hh = mSlabR * GH / mTotMem;
-        drawBox(g, 0xffff000, yy, hh);
-
-        // Draw the slab-u
-        yy += hh;
-        hh = mSlabU * GH / mTotMem;
-        drawBox(g, 0xff00000, yy, hh);
-        int endPossFree = yy;
-        drawLabel(g, startPossFree, endPossFree, "Can be freed");
-
-        // Write some more text on the chart
-        FontMetrics fm = g.getFontMetrics();
-        g.drawString("Memory", 10, 10 + fm.getAscent());
-        g.drawString("overview", 10, 10 + fm.getAscent() + fm.getHeight());
-
-        // Save the chart
-        try {
-            String fn = "meminfo.png";
-            ImageIO.write(img, "png", new File(mod.getBaseDir() + fn));
-            ch.add(new Block().add(new Img(fn)));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!mod.getContext().isSqlite()){
+	        // Create some nice chart about it as well
+	        BufferedImage img = new BufferedImage(IW, IH, BufferedImage.TYPE_INT_RGB);
+	        Graphics2D g = (Graphics2D)img.getGraphics();
+	        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	        g.setColor(Color.WHITE);
+	        g.fillRect(0, 0, IW, IH);
+	
+	        // Draw the total memory area
+	        int b = 3;
+	        g.setColor(Color.BLACK);
+	        g.fillRect(GML - b, GMT - b, GW + 2*b, GH + 2*b);
+	        g.setColor(Color.LIGHT_GRAY);
+	        g.fillRect(GML, GMT, GW, GH);
+	
+	        // Draw the free memory
+	        int yy = 0;
+	        int hh = mFreeMem * GH / mTotMem;
+	        drawBox(g, 0x00ff00, yy, hh);
+	        drawLabel(g, 0, hh, "Free");
+	
+	        // Draw the buffers
+	        yy += hh;
+	        hh = mBuffers * GH / mTotMem;
+	        drawBox(g, 0x40ffff, yy, hh);
+	        int startPossFree = yy;
+	
+	        // Draw the cache
+	        yy += hh;
+	        hh = mCaches * GH / mTotMem;
+	        drawBox(g, 0x8080ff, yy, hh);
+	
+	        // Draw the slab-r
+	        yy += hh;
+	        hh = mSlabR * GH / mTotMem;
+	        drawBox(g, 0xffff000, yy, hh);
+	
+	        // Draw the slab-u
+	        yy += hh;
+	        hh = mSlabU * GH / mTotMem;
+	        drawBox(g, 0xff00000, yy, hh);
+	        int endPossFree = yy;
+	        drawLabel(g, startPossFree, endPossFree, "Can be freed");
+	
+	        // Write some more text on the chart
+	        FontMetrics fm = g.getFontMetrics();
+	        g.drawString("Memory", 10, 10 + fm.getAscent());
+	        g.drawString("overview", 10, 10 + fm.getAscent() + fm.getHeight());
+	
+	        // Save the chart
+	        try {
+	            String fn = "meminfo.png";
+	            ImageIO.write(img, "png", new File(mod.getBaseDir() + fn));
+	            ch.add(new Block().add(new Img(fn)));
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
         }
-
         mainCh.addChapter(ch);
     }
 

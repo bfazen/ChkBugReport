@@ -168,6 +168,8 @@ public class Main implements OutputListener {
                         mMod.addFile(param, Section.META_PARSE_MONKEY, false);
                     } else if ("o".equals(key)) {
                         mMod.setFileName(param);
+                    } else if ("-sqlite".equals(key)) {
+                        mContext.setSqlite(true);
                     } else if ("-silent".equals(key)) {
                         mContext.setSilent(true);
                     } else if ("-no-limit".equals(key)) {

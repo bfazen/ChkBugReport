@@ -89,7 +89,10 @@ import javax.imageio.ImageIO;
     }
 
     private boolean generateSampleDataGraph(Module br, String fn, Vector<SampleData> sds, String eventType) {
-        int w = 800;
+        if(br.getContext().isSqlite()){
+        	return false;
+        }
+    	int w = 800;
         int h = 350;
         int cx = 100;
         int cy = 250;
@@ -213,7 +216,9 @@ import javax.imageio.ImageIO;
     }
 
     private boolean generateSampleDataGraphAlt(Module br, String fn, Vector<SampleData> sds, String eventType) {
-        int marginTop = 50;
+    	if(br.getContext().isSqlite()) return false;
+    	
+    	int marginTop = 50;
         int marginLeft = 100;
         int marginBottom = 100;
         int marginRight = 100;
@@ -329,7 +334,8 @@ import javax.imageio.ImageIO;
     }
 
     private boolean generateSampleDataVCD(Module br, String fn, Vector<SampleData> sds, String eventType) {
-        if (sds.size() == 0) return false;
+    	if(br.getContext().isSqlite()) return false;
+    	if (sds.size() == 0) return false;
 
         // In the first pass we need to find the unique ids, and also generate a sorted
         // list of events
