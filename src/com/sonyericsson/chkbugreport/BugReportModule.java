@@ -202,14 +202,14 @@ public class BugReportModule extends Module {
                     mTimestamp = ts;
                 }
             }
-
+            
             // Parse sections and sub-sections
             if (buff.startsWith("------ ")) {
                 // build up file name
                 int e = buff.indexOf(" ------");
                 if (e >= 0) {
                     String sectionName = buff.substring(7, e);
-
+                    
                     // Workaround for SMAP spamming
                     boolean newSection = true;
                     if (curSection != null && curSection.getName().equals("SMAPS OF ALL PROCESSES")) {

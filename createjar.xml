@@ -13,10 +13,13 @@
 
         <!-- Compile the source code -->
         <echo message="Compiling code..."/>
-        <javac destdir="bin" debug="true" classpath="libs/ddmlib.jar">
+        <javac destdir="bin" debug="true" includeantruntime="true" classpath="libs/ddmlib.jar">
             <src path="src"/>
         </javac>
-
+    	<javac destdir="bin" debug="true" includeantruntime="true" classpath="libs/sqlite-jdbc-3.7.2.jar">
+    	  <src path="src" />
+    	</javac>
+    	
         <!-- Copy resources -->
         <echo message="Copy resources..."/>
         <copy todir="bin">
