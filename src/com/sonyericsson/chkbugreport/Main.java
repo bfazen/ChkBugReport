@@ -158,6 +158,8 @@ public class Main implements OutputListener {
                         mMod.addFile(param, Section.USAGE_HISTORY, false);
                     } else if ("pb".equals(key)) {
                         mMod.addFile(param, Section.PARTIAL_FILE_HEADER, false);
+                    } else if ("bi".equals(key)) {
+                        mMod.addFile(param, Section.DUMP_OF_SERVICE_BATTERYINFO, false);
                     } else if ("sd".equals(key)) {
                         mMod.addFile(param, Section.META_SCAN_DIR, false);
                     } else if ("ds".equals(key)) {
