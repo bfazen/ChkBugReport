@@ -186,6 +186,7 @@ public class BatteryInfoPlugin extends Plugin {
     }
 
     private void genBatteryInfo(BugReportModule br, Chapter ch) {
+    	
         Section sec = br.findSection(Section.DUMP_OF_SERVICE_BATTERYINFO);
         if (sec == null) {
             br.printErr(3, TAG + "Section not found: " + Section.DUMP_OF_SERVICE_BATTERYINFO + " (ignoring it)");
@@ -490,7 +491,7 @@ public class BatteryInfoPlugin extends Plugin {
                             String sCount = m.group(4);
                             long ts = readTs(sTime.replace(" ", ""));
                             tgWL.setNextRowStyle(colorizeTime(ts));
-                            tgWL.addData(uidName, new Link(uidLink, sUID));
+                            tgWL.addData(sUID);
                             tgWL.addData(name);
                             tgWL.addData(type);
                             tgWL.addData(sCount);
@@ -510,7 +511,7 @@ public class BatteryInfoPlugin extends Plugin {
                             long sent = parseBytes(m.group(2));
                             sumRecv += recv;
                             sumSent += sent;
-                            tgNet.addData(uidName, new Link(uidLink, sUID));
+                            tgNet.addData(sUID);
                             tgNet.addData(new ShadedValue(recv));
                             tgNet.addData(new ShadedValue(sent));
                             tgNet.addData(new ShadedValue(recv + sent));
@@ -540,7 +541,7 @@ public class BatteryInfoPlugin extends Plugin {
                                     cpu.usr += usr;
                                     cpu.krn += krn;
 
-                                    tgCP.addData(uidName, new Link(uidLink, sUID));
+                                    tgCP.addData(sUID);
                                     tgCP.addData(procName);
                                     tgCP.addData(sUsr);
                                     tgCP.addData(new ShadedValue(usr));
@@ -600,7 +601,7 @@ public class BatteryInfoPlugin extends Plugin {
         if (!cpuPerUidStats.isEmpty()) {
             for (String sUid : cpuPerUidStats.keySet()) {
                 CpuPerUid cpu = cpuPerUidStats.get(sUid);
-                tgCU.addData(cpu.uidName, new Link(cpu.uidLink, sUid));
+                tgCU.addData(sUid);
                 tgCU.addData(new ShadedValue(cpu.usr));
                 tgCU.addData(new ShadedValue(cpu.krn));
                 tgCU.addData(new ShadedValue(cpu.usr + cpu.krn));
